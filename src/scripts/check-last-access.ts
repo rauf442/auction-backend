@@ -155,7 +155,7 @@ async function checkLastAccess(): Promise<void> {
 
       if (!changeError && recentChanges) {
         log(`✅ Found recent activity via RPC:`);
-        recentChanges.forEach((change, index) => {
+        recentChanges.forEach((change: any, index: number) => {
           log(`   ${index + 1}. ${JSON.stringify(change, null, 2)}`);
         });
       }
