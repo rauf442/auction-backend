@@ -1483,7 +1483,7 @@ router.post('/sync-google-sheet', async (req: AuthenticatedRequest, res: Respons
       return res.status(400).json({ error: 'CSV must contain at least a header row and one data row' });
     }
 
-    const headers = rows[0].map(h => h.trim().toLowerCase());
+    const headers = rows[0].map((h: any) => h.trim().toLowerCase());
     const dataRows = rows.slice(1);
 
     console.log('Parsed headers:', headers);
@@ -1508,7 +1508,7 @@ router.post('/sync-google-sheet', async (req: AuthenticatedRequest, res: Respons
       if (!values || values.length === 0) continue;
 
       // Skip rows where all values are empty
-      if (values.every(val => !val || String(val).trim() === '')) continue;
+      if (values.every((val: any) => !val || String(val).trim() === '')) continue;
 
       if (values.length !== headers.length) {
         errors.push(`Row ${i + 2}: Column count mismatch (expected ${headers.length}, got ${values.length})`);

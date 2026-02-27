@@ -707,7 +707,7 @@ router.post('/import/csv', csvUpload.single('file'), async (req, res) => {
         success: false,
         message: 'Failed to parse CSV file',
         imported: 0,
-        errors: parseResult.errors.map(err => err.message)
+        errors: parseResult.errors.map((err: any) => err.message)
       });
     }
 
