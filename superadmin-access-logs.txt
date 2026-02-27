@@ -1,0 +1,58 @@
+[2025-10-30T03:59:20.043Z] ================================================================================
+[2025-10-30T03:59:20.045Z] SUPERADMIN@ART.COM LAST ACCESS ANALYSIS
+[2025-10-30T03:59:20.045Z] ================================================================================
+[2025-10-30T03:59:20.045Z] 🔍 Starting access log analysis for superadmin@art.com...
+[2025-10-30T03:59:20.045Z] 📧 Step 1: Getting user authentication details...
+[2025-10-30T03:59:20.442Z] ✅ User found: e440255a-e606-4dff-b5c6-f286741495d7
+[2025-10-30T03:59:20.442Z] ⏰ Step 2: Authentication timestamps...
+[2025-10-30T03:59:20.442Z]    Account created: 2025-08-16T09:56:19.556957Z
+[2025-10-30T03:59:20.442Z]    Email confirmed: 2025-08-16T09:56:19.590164Z
+[2025-10-30T03:59:20.442Z]    Last sign in: 2025-10-29T15:28:27.360311Z
+[2025-10-30T03:59:20.442Z]    Confirmation sent: Never
+[2025-10-30T03:59:20.442Z]    Recovery sent: 2025-10-30T03:54:10.345737Z
+[2025-10-30T03:59:20.442Z]    Email change sent: Never
+[2025-10-30T03:59:20.442Z]    Phone confirmed: Never
+[2025-10-30T03:59:20.442Z]    Banned until: Not available
+[2025-10-30T03:59:20.442Z] 👤 Step 3: Checking profiles table activity...
+[2025-10-30T03:59:20.799Z] ✅ Profile details:
+[2025-10-30T03:59:20.799Z]    Profile ID: 14
+[2025-10-30T03:59:20.799Z]    Auth User ID: e440255a-e606-4dff-b5c6-f286741495d7
+[2025-10-30T03:59:20.799Z]    Role: super_admin
+[2025-10-30T03:59:20.799Z]    Active: true
+[2025-10-30T03:59:20.799Z]    Created: 2025-08-15T10:50:29+00:00
+[2025-10-30T03:59:20.799Z]    Updated: 2025-08-16T09:56:19.556061+00:00
+[2025-10-30T03:59:20.799Z]    First Name: Super
+[2025-10-30T03:59:20.799Z]    Last Name: Admin
+[2025-10-30T03:59:20.800Z]    Hours since last profile update: 1794
+[2025-10-30T03:59:20.800Z] 📊 Step 4: Checking for audit logs and recent activity...
+[2025-10-30T03:59:22.486Z] 🗃️  Step 5: Checking recent database modifications...
+[2025-10-30T03:59:22.826Z] 🔑 Step 6: Checking active sessions and tokens...
+[2025-10-30T03:59:23.157Z] ✅ User details from admin API:
+[2025-10-30T03:59:23.157Z]    Has active session: true
+[2025-10-30T03:59:23.157Z]    User metadata: {
+  "email_verified": true
+}
+[2025-10-30T03:59:23.157Z]    App metadata: {
+  "provider": "email",
+  "providers": [
+    "email"
+  ]
+}
+[2025-10-30T03:59:23.157Z] 🌐 Step 7: Analyzing access patterns...
+[2025-10-30T03:59:23.158Z]    Hours since last successful sign in: 12
+[2025-10-30T03:59:23.158Z] ✅ Account accessed within last 24 hours
+[2025-10-30T03:59:23.158Z] 🚨 Step 8: Checking for suspicious activity...
+[2025-10-30T03:59:23.158Z] ⚠️  Suspicious activity indicators:
+[2025-10-30T03:59:23.158Z]    - Recent password recovery request
+[2025-10-30T03:59:23.158Z] 📋 Step 9: Access Analysis Summary
+[2025-10-30T03:59:23.158Z]    Last known activity: 2025-10-29T15:28:27.360Z
+[2025-10-30T03:59:23.158Z]    Days since last activity: 0
+[2025-10-30T03:59:23.158Z] 📊 Status: ACTIVE TODAY
+[2025-10-30T03:59:23.158Z] 💡 Recommendations:
+[2025-10-30T03:59:23.158Z]    - Review suspicious activity indicators
+[2025-10-30T03:59:23.158Z]    - Consider security audit if account compromise is suspected
+[2025-10-30T03:59:23.158Z]    - Check application logs for additional context
+[2025-10-30T03:59:23.158Z]    - Review server access logs for IP addresses
+[2025-10-30T03:59:23.158Z] ================================================================================
+[2025-10-30T03:59:23.158Z] ACCESS ANALYSIS COMPLETE
+[2025-10-30T03:59:23.158Z] ================================================================================
