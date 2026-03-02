@@ -74,7 +74,11 @@ const corsOptions = {
       'https://auction-frontend-bice.vercel.app',
       'https://auction-frontend-git-main-nafiskabbos-projects.vercel.app',
       'https://auction-frontend-*.vercel.app',
-      'https://msaber-*.vercel.app'
+      'https://msaber-*.vercel.app',
+      // New URLs
+  'https://auction-frontend-six-beta.vercel.app',
+  'https://metsab-auctions-delta.vercel.app',
+  'https://aurum-auctions-one.vercel.app',
     ];
 
     // Check if origin matches any allowed pattern (supporting wildcards)
