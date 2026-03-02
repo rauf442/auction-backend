@@ -8,7 +8,7 @@
 // Set this to a test email address to override all email recipients
 // Set to null or empty string to disable override and send to actual recipients
 // const TEST_EMAIL_OVERRIDE = 'info@metsabauctions.com' // Change to null to disable
-const TEST_EMAIL_OVERRIDE = 'atharvachougaleismyname@gmail.com' // Change to null to disable
+const TEST_EMAIL_OVERRIDE = null // Change to null to disable
 // const TEST_EMAIL_OVERRIDE = 'kabboandreigns@gmail.com' // Change to null to disable
 // const TEST_EMAIL_OVERRIDE = 'info@metsabauctions.com' // Change to null to disable
 console.log('🔧 Email Test Mode:', TEST_EMAIL_OVERRIDE ? `ENABLED - All emails will be sent to ${TEST_EMAIL_OVERRIDE}` : 'DISABLED - Emails will be sent to actual recipients')
