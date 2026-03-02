@@ -237,7 +237,7 @@ router.post('/email-campaigns/:id/send', async (req: AuthRequest, res: Response)
         to: test_email,
         subject: `[TEST] ${campaign.subject}`,
         html: campaign.html_content,
-        from: campaign.brand?.email_from || undefined,
+        from: process.env.DEFAULT_FROM_EMAIL || undefined,
       });
 
       return res.json({ 
@@ -302,7 +302,7 @@ router.post('/email-campaigns/:id/send', async (req: AuthRequest, res: Response)
             to: recipient.email,
             subject: campaign.subject,
             html: campaign.html_content,
-            from: campaign.brand?.email_from || undefined,
+            from: process.env.DEFAULT_FROM_EMAIL || undefined,
           });
 
           if (success) {
