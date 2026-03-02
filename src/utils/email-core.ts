@@ -88,7 +88,7 @@ export class EmailCore {
       const payload: BrevoEmailPayload = {
         sender: {
           name: this.DEFAULT_FROM_NAME,
-          email: options.from || this.DEFAULT_FROM_EMAIL
+          email: process.env.DEFAULT_FROM_EMAIL!
         },
         to: [{
           email: actualRecipient
