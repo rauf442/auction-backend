@@ -1028,33 +1028,17 @@ router.post('/:invoiceId/send-payment-confirmation', async (req: AuthRequest, re
     }
 
     // Send the actual email using our email service
-const { EmailService } = await import('../utils/email-service')
+    const { EmailService } = await import('../utils/email-service')
 
-// Try compliance template first
-let emailSent = false
-if (invoice.brand?.id) {
-  emailSent = await EmailService.sendPaymentConfirmationEmailCustom(
-    invoice.brand.id,
-    clientEmail,
-    {},
-    invoice,
-    invoice.brand,
-    invoice.items || []
-  )
-}
-
-// Fallback to legacy if compliance template not set
-if (!emailSent) {
-  emailSent = await EmailService.sendPaymentConfirmationEmail(
-    clientEmail,
-    clientName,
-    invoice.invoice_number,
-    brandName,
-    paymentType,
-    amount || invoice.paid_amount || 0,
-    invoiceId
-  )
-}
+    const emailSent = await EmailService.sendPaymentConfirmationEmail(
+      clientEmail,
+      clientName,
+      invoice.invoice_number,
+      brandName,
+      paymentType,
+      amount || invoice.paid_amount || 0,
+      invoiceId
+    )
 
     if (!emailSent) {
       console.warn('Failed to send payment confirmation email, but continuing with success response')
