@@ -1991,6 +1991,67 @@ router.get('/generateautomaticinvoices/:auctionId', async (req: Request, res: Re
           premium: parseFloat(item.sale.buyersPrem),
           clientId: client.id
         });
+                // Generate vendor invoice from item vendor_id
+        const { data: artworkItems } = await supabaseAdmin
+          .from('items')
+          .select('id, vendor_id')
+          .in('id', item_ids)
+
+        if (artworkItems && artworkItems.length > 0) {
+          // Group items by vendor_id
+          const vendorGroups: Record<number, string[]> = {}
+          artworkItems.forEach((artwork: any) => {
+            if (artwork.vendor_id) {
+              if (!vendorGroups[artwork.vendor_id]) {
+                vendorGroups[artwork.vendor_id] = []
+              }
+              vendorGroups[artwork.vendor_id].push(String(artwork.id))
+            }
+          })
+
+          // Create one vendor invoice per vendor
+          for (const [vendorId, vendorItemIds] of Object.entries(vendorGroups)) {
+            const { data: vendorClient } = await supabaseAdmin
+              .from('clients')
+              .select('*')
+              .eq('id', vendorId)
+              .single()
+
+            if (!vendorClient) {
+              console.log(`⚠️ Vendor client not found for vendor_id: ${vendorId}`)
+              continue
+            }
+
+            const vendorPremiumRate = vendorClient.vendor_premium || 0
+            const hammerPrice = parseFloat(item.sale.hammer)
+            const vendorPremium = hammerPrice * (vendorPremiumRate / 100)
+            const vendorInvoiceNumber = generateInvoiceNumber(brand)
+
+            const { error: vendorError } = await supabaseAdmin
+              .from('invoices')
+              .insert([{
+                client_id: vendorClient.id,
+                item_ids: vendorItemIds,
+                sale_prices: vendorItemIds.map(() => hammerPrice),
+                buyer_premium_prices: vendorItemIds.map(() => vendorPremium),
+                invoice_number: vendorInvoiceNumber,
+                auction_id: auctionId,
+                status: 'unpaid',
+                brand_id: brandId,
+                platform: 'liveauctioneer',
+                type: 'vendor',
+                buyer_first_name: vendorClient.first_name || '',
+                buyer_last_name: vendorClient.last_name || '',
+                buyer_email: vendorClient.email || ''
+              }])
+
+            if (vendorError) {
+              console.error(`❌ Error creating vendor invoice for vendor ${vendorId}:`, vendorError.message)
+            } else {
+              console.log(`✅ Vendor invoice created for vendor_id: ${vendorId}`)
+            }
+          }
+        }
       })
     );
     res.json({
