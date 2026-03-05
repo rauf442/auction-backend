@@ -448,10 +448,7 @@ export function getDefaultWinningBidTemplate(): string {
 
           <!-- CTA Button -->
           <div style="text-align: center; margin: 40px 0;">
-            <a href="[BASE_URL]/contact"
-               style="background: linear-gradient(135deg, #10b981 0%, #059669 100%); color: white; padding: 16px 32px; text-decoration: none; border-radius: 8px; display: inline-block; font-weight: 600; font-size: 16px; box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3);">
-              Contact Our Team
-            </a>
+            <a href="[BASE_URL]/contact" style="background: linear-gradient(135deg, #10b981 0%, #059669 100%); color: white; padding: 16px 32px; text-decoration: none; border-radius: 8px; display: inline-block; font-weight: 600; font-size: 16px; box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3);"> Contact Our Team</a>
           </div>
 
           <!-- Contact Info -->
