@@ -287,44 +287,20 @@ export class EmailService {
     try {
       const templates = await this.getBrandEmailTemplates(brandId)
 
-      if (!templates?.vendor_post_sale_invoice_email_subject || !templates?.vendor_post_sale_invoice_email_body) {
-        console.log('⚠️ No custom vendor sale notification template found, using default')
-        return false
-      }
-
       // Use comprehensive placeholder system
-      const placeholderMap = invoice && brand 
-        ? buildPlaceholderMap({ invoice, client: invoice.client, brand, auction: invoice.auction, items })
-        : Object.keys(variables).reduce((acc, key) => {
-            acc[key.toUpperCase()] = String(variables[key])
-            return acc
-          }, {} as Record<string, string>)
+const placeholderMap = invoice && brand 
+  ? buildPlaceholderMap({ invoice, client: invoice.client, brand, auction: invoice.auction, items })
+  : Object.keys(variables).reduce((acc, key) => {
+      acc[key.toUpperCase()] = String(variables[key])
+      return acc
+    }, {} as Record<string, string>)
 
-      const subject = replaceEmailPlaceholders(templates.vendor_post_sale_invoice_email_subject, placeholderMap)
-      const bodyContent = replaceEmailPlaceholders(templates.vendor_post_sale_invoice_email_body, placeholderMap)
-//            const templates = await this.getBrandEmailTemplates(brandId)
-// const emailSubjectTemplate = templates?.vendor_post_sale_invoice_email_subject || 'Post-Sale Invoice - [INVOICE_NUMBER]'
-// const emailBodyTemplate = templates?.vendor_post_sale_invoice_email_body || `
-// Dear [VENDOR_NAME],<br><br>
-// Please find attached your post-sale invoice <strong>[INVOICE_NUMBER]</strong> for the recent auction.<br><br>
-// <strong>Sale Summary:</strong><br>
-// Hammer Price: [HAMMER_PRICE]<br>
-// Vendor Premium: [VENDOR_PREMIUM]<br>
-// Total: [TOTAL_AMOUNT]<br><br>
-// Please review the attached invoice for full details.<br><br>
-// Best regards,<br>
-// [BRAND_NAME]
-// `
-// // Use comprehensive placeholder system
-// const placeholderMap = invoice && brand
-//     ? buildPlaceholderMap({ invoice, client: invoice.client, brand, auction: invoice.auction, items })
-//     : Object.keys(variables).reduce((acc, key) => {
-//         acc[key.toUpperCase()] = String(variables[key])
-//         return acc
-//       }, {} as Record<string, string>)
-// const subject = replaceEmailPlaceholders(emailSubjectTemplate, placeholderMap)
-// const bodyContent = replaceEmailPlaceholders(emailBodyTemplate, placeholderMap)
-      const htmlBody = wrapEmailWithFooter(bodyContent, brand)
+const subjectTemplate = templates?.vendor_post_sale_invoice_email_subject || 'Post-Sale Invoice - [AUCTION_NAME]'
+const bodyTemplate = templates?.vendor_post_sale_invoice_email_body || getDefaultVendorSaleNotificationTemplate()
+
+const subject = replaceEmailPlaceholders(subjectTemplate, placeholderMap)
+const bodyContent = replaceEmailPlaceholders(bodyTemplate, placeholderMap)
+const htmlBody = wrapEmailWithFooter(bodyContent, brand)
 
       // Attach vendor invoice PDF (final)
       const attachments: EmailAttachment[] = []
@@ -362,23 +338,20 @@ export class EmailService {
     try {
       const templates = await this.getBrandEmailTemplates(brandId)
 
-      if (!templates?.vendor_paid_acknowledgement_email_subject || !templates?.vendor_paid_acknowledgement_email_body) {
-        console.log('⚠️ No custom vendor payment confirmation template found, using default')
-        return false
-      }
+// Use comprehensive placeholder system
+const placeholderMap = invoice && brand 
+  ? buildPlaceholderMap({ invoice, client: invoice.client, brand, auction: invoice.auction, items })
+  : Object.keys(variables).reduce((acc, key) => {
+      acc[key.toUpperCase()] = String(variables[key])
+      return acc
+    }, {} as Record<string, string>)
 
-      // Use comprehensive placeholder system
-      const placeholderMap = invoice && brand 
-        ? buildPlaceholderMap({ invoice, client: invoice.client, brand, auction: invoice.auction, items })
-        : Object.keys(variables).reduce((acc, key) => {
-            acc[key.toUpperCase()] = String(variables[key])
-            return acc
-          }, {} as Record<string, string>)
+const subjectTemplate = templates?.vendor_paid_acknowledgement_email_subject || 'Payment Processed - [INVOICE_NUMBER] | [BRAND_NAME]'
+const bodyTemplate = templates?.vendor_paid_acknowledgement_email_body || getDefaultVendorPaymentConfirmationTemplate()
 
-      const subject = replaceEmailPlaceholders(templates.vendor_paid_acknowledgement_email_subject, placeholderMap)
-      const bodyContent = replaceEmailPlaceholders(templates.vendor_paid_acknowledgement_email_body, placeholderMap)
-      const htmlBody = wrapEmailWithFooter(bodyContent, brand)
-
+const subject = replaceEmailPlaceholders(subjectTemplate, placeholderMap)
+const bodyContent = replaceEmailPlaceholders(bodyTemplate, placeholderMap)
+const htmlBody = wrapEmailWithFooter(bodyContent, brand)
       // Attach vendor invoice PDF (final)
       const attachments: EmailAttachment[] = []
       if (invoice && brand) {
