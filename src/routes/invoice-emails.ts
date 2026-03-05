@@ -218,15 +218,14 @@ router.post('/:invoiceId/send-email', async (req: AuthRequest, res: Response) =>
     const brandEmail = invoice.brand?.contact_email || process.env.DEFAULT_FROM_EMAIL || 'info@aurumauctions.com'
     const totalAmount = calculateTotalAmount(invoice, 'final', invoice.brand)
     const baseUrl = process.env.NEXT_PUBLIC_FRONTEND_URL || 'http://localhost:3000'
-    // Fetch items for placeholder replacement
-let items: any[] = []
-if (invoice.item_ids && Array.isArray(invoice.item_ids) && invoice.item_ids.length > 0) {
-  const { data: itemsData } = await supabaseAdmin
-    .from('items')
-    .select('*')
-    .in('id', invoice.item_ids)
-  items = itemsData || []
-}
+    let items: any[] = []
+    if (invoice.item_ids && Array.isArray(invoice.item_ids) && invoice.item_ids.length > 0) {
+      const { data: itemsData } = await supabaseAdmin
+        .from('items')
+        .select('*')
+        .in('id', invoice.item_ids)
+      items = itemsData || []
+    }
     // Prepare variables for template replacement
     const variables: any = {
       client_name: clientName,
@@ -259,7 +258,7 @@ if (invoice.item_ids && Array.isArray(invoice.item_ids) && invoice.item_ids.leng
 
     switch (type) {
       case 'winning_bid':
-        subject = templates?.winning_bid_email_subject || 'Congratulations! You have won [ITEM_TITLE]'
+        subject = templates?.winning_bid_email_subject || `Congratulations! You have won ${items?.[0]?.title || invoice.title || 'your auction item'}`
         body = templates?.winning_bid_email_body || getDefaultWinningBidTemplate()
         break
 

@@ -428,7 +428,7 @@ export class EmailService {
 
       switch (templateType) {
         case 'winning_bid':
-          subject = templates?.winning_bid_email_subject || 'Congratulations! You have won [ITEM_TITLE]'
+          subject = templates?.winning_bid_email_subject || `Congratulations! You have won ${placeholderMap['ITEM_TITLE'] || 'your auction item'}`
           body = templates?.winning_bid_email_body || getDefaultWinningBidTemplate()
           break
         case 'payment_confirmation':
