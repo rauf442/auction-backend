@@ -5,7 +5,21 @@ import { authMiddleware } from '../middleware/auth';
 import multer from 'multer';
 
 const router = express.Router();
+router.get('/public', async (req, res) => {
+  try {
+    const { data: schools, error } = await supabaseAdmin
+      .from('schools')
+      .select('id, name, location')
+      .eq('status', 'active')
+      .order('name', { ascending: true })
+      .limit(1000)
 
+    if (error) return res.status(500).json({ success: false })
+    res.json({ success: true, data: schools })
+  } catch (e: any) {
+    res.status(500).json({ success: false })
+  }
+})
 // Apply auth middleware to all routes
 router.use(authMiddleware);
 

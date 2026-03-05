@@ -4,7 +4,22 @@ import { supabaseAdmin } from '../utils/supabase';
 import { authMiddleware } from '../middleware/auth';
 
 const router = express.Router();
+// Public route - no auth required (must be BEFORE authMiddleware)
+router.get('/public', async (req, res) => {
+  try {
+    const { data: artists, error } = await supabaseAdmin
+      .from('artists')
+      .select('id, name, birth_year, death_year, nationality')
+      .eq('status', 'active')
+      .order('name', { ascending: true })
+      .limit(1000)
 
+    if (error) return res.status(500).json({ success: false })
+    res.json({ success: true, data: artists })
+  } catch (e: any) {
+    res.status(500).json({ success: false })
+  }
+})
 // Apply auth middleware to all routes
 router.use(authMiddleware);
 
